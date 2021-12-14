@@ -9,7 +9,9 @@ $input_clean_regex = '[^A-Za-z0-9\!\@\#\$\%\^\&\*\(\)\-\_]';
 # dataSource: Handles connections to databases.
 # csv_interface: Conversion from CSV data to 2D associative arrays
 if($_SERVER['REMOTE_ADDR'] == '127.0.0.1')
-	{$GLOBALS['cfg_file'] = "/home2/metdatmg/etc/metdatmgmt.com/connections.ini";} 
+	{$GLOBALS['cfg_file'] = "C:/xampp/php/connections.ini";} 
+else 
+	{$GLOBALS['cfg_file'] = "/home2/metdatmg/etc/metdatmgmt.com/connections.ini";}
 if(!class_exists('dataSource')){include($_SERVER['DOCUMENT_ROOT'] . '/filter_menu_plugin/includes/datasource.php');}
 if(!class_exists('csv_interface')){include($_SERVER['DOCUMENT_ROOT'] . '/filter_menu_plugin/includes/csv_interface.php');}
 #-----------------------------------------------------------------------------------------------------------#
