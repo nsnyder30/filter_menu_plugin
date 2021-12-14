@@ -48,8 +48,7 @@ include($_SERVER['DOCUMENT_ROOT'] . '/filter_menu_plugin/includes/page_init.php'
 	include($_SERVER['DOCUMENT_ROOT'] . '/filter_menu_plugin/includes/filter_menu.php');
 	ob_start() ?>
 	<?php 
-	$filter_menu_append = ob_get_clean();
-	include($_SERVER['DOCUMENT_ROOT'] . '/filter_menu_plugin/includes/footer.php'); ?>
+	$filter_menu_append = ob_get_clean();?>
 	</div>
 
 	<!------------------------------------------------INCLUDE PAGE FOOTER-------------------------------------------------->
