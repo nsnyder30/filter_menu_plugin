@@ -3,26 +3,6 @@
 //------------------------------------------------------------------------------------------------------------------------->
 <div data-ng-app="filter_app">
 	<div id="filter_controller" data-ng-controller="filter_ctl">
-		<!-------------------------------CUSTOM DATE SELECTOR INTERFACE FOR FISCAL CALENDARS------------------------------->
-		<div id="calendar_selector" class="align-top border border-secondary u-text--noselect"  data-ng-show="show_calendar" style="position:absolute; top:{{calendar.top}}; left:{{calendar.left}}">
-			<div class="u-bgcolor--white" style="display:inline-block" data-ng-repeat="month in months" data-ng-show="month.display" data-ng-cloak>
-				<div class="text-center w-100 u-bgcolor--darkblue">
-					<button class="a-clickable" style="display:inline-block;width:8%" data-ng-click="prev_month()">&#8249;</button>
-					<div class="a-clickable u-bgcolor--darkblue u-color--white u-font--bold" style="display:inline-block;width:80%" data-ng-click="date_select(month)">{{month.text}}</div>
-					<button class="a-clickable" style="display:inline-block;width:8%" data-ng-click="next_month()">&#8250;</button>
-				</div>
-				<div data-ng-repeat="week in month.weeks">
-					<div class="text-center border a-clickable u-font--mid u-bgcolor--midblue u-font--bold" data-ng-click="date_select(week)">{{week.text}}</div>
-					<div style="display:inline-block" data-ng-repeat="day in week.days">
-						<div class="text-center p-1 border u-font--mid a-clickable u-bgcolor--paleblue" data-ng-click="date_select(day)">{{day.date_text}}</div>
-						<div class="text-center border u-font--small a-clickable" data-ng-repeat="shift in day.shifts" data-ng-click="date_select(shift)" data-ng-class="{'u-bgcolor--lightyellow':shift.s >= filter_selections.flt_report_start && shift.e <= filter_selections.flt_report_end}">{{shift.text}}</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!----------------------------------------------------------------------------------------------------------------->
-
-
 		<!-------------------------------------------LOADING FILTES INDICATOR--------------------------------------------->
 		<div data-ng-show="filters_loading" class="js-load_wait m-1 bg-success text-white font-weight-bold" style="display:none">Loading Filters{{ellipses}}</div>
 		<!----------------------------------------------------------------------------------------------------------------->
@@ -44,20 +24,6 @@
 							<select class="w-100" data-ng-if="filter_list.subset_selector === undefined || $parent.filter_selections.flt_select_list_subsets[key].id == -1" multiple="multiple" size="20" data-ng-model="$parent.filter_selections.flt_select_lists[key]" data-ng-options="val for val in $parent.filter_list.vals" data-ng-change="validate_submit()"></select>
 							<select class="w-100" data-ng-if="filter_list.subset_selector !== undefined && $parent.filter_selections.flt_select_list_subsets[key].id != -1" multiple="multiple" size="20" data-ng-model="$parent.filter_selections.flt_select_lists[key]" data-ng-options="val for val in $parent.filter_selections.flt_select_list_subsets[key].subset" data-ng-change="validate_submit()"></select>
 						</td>
-					</tr>
-				</table>
-				<!--------------------------------------------------------------------------------------------------------->
-
-
-				<!----------------------------PRINT FISCAL CALENDAR REPORTING PERIOD CONTROLS------------------------------>
-				<table class="mt-2 align-top" style="display:inline-block" data-ng-if="filter_options.show_fiscal_reporting_period">
-					<tr>
-						<td class="text-right font-weight-bold">Report Start:</td>
-						<td class="text-right bg-white border border-dark calendar_button a-clickable" data-ng-click="display_calendar($event, ['filter_selections','flt_report_start'], 's')">&nbsp;{{filter_selections.flt_report_start_string}}&nbsp;<img src="/filter_menu_plugin/images/calendar.png" class="ml-1 mr-1 mb-1" width="16" height="16"></td>
-					</tr>
-					<tr>
-						<td class="text-right font-weight-bold">Report End:</td>
-						<td class="text-right bg-white border border-dark calendar_button a-clickable" data-ng-click="display_calendar($event, ['filter_selections','flt_report_end'], 'e')">&nbsp;{{filter_selections.flt_report_end_string}}&nbsp;<img src="/filter_menu_plugin/images/calendar.png" class="ml-1 mr-1 mb-1" width="16" height="16" ></td>
 					</tr>
 				</table>
 				<!--------------------------------------------------------------------------------------------------------->
