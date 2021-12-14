@@ -1,7 +1,7 @@
 <?php
 /*
 	Created by Neil Snyder 
-	File Function: User login interface for marketing frontend
+	File Function: User login interface for sample filter menu plugin application
 */
 
 #-----------------------------------------DECLARE VARIABLES-------------------------------------------------#
@@ -157,9 +157,6 @@ if(isset($_POST['submitted']))
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-sm-12 p-0 text-center justify-content-center">
-						<a href="/filter_menu_plugin/utils/create_account.php">Create Account</a>
-					</div>
 				</div>
 			</form>
 			<div class="col-sm">
