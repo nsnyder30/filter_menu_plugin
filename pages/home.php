@@ -8,7 +8,7 @@ include($_SERVER['DOCUMENT_ROOT'] . '/filter_menu_plugin/includes/page_init.php'
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>SPL DB Home</title>
+	<title>Filter Menu Plugin Sample Application</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script src="/filter_menu_plugin/lib_js/standard_functions.js?modtime=<?php echo filemtime($_SERVER['DOCUMENT_ROOT'] . '/filter_menu_plugin/lib_js/standard_functions.js'); ?>"></script>
