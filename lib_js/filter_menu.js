@@ -350,10 +350,7 @@ function FilterCtl($scope, $http, $uibModal, $interval, $timeout, $compile, shar
 									 
 						if(typeof filter_options.flt_report_start != 'undefined' && typeof filter_options.flt_report_end != 'undefined')
 						{
-							if(typeof filter_options.reporting_period_mode != 'undefined' && filter_options.reporting_period_mode == 'fiscal')
-								{filter_options.show_fiscal_reporting_period = true;}
-							else
-								{filter_options.show_reporting_period = true;}
+							filter_options.show_reporting_period = true;
 							if(detect_ie())
 							{
 								let s = filter_options.flt_report_start;
@@ -382,55 +379,6 @@ function FilterCtl($scope, $http, $uibModal, $interval, $timeout, $compile, shar
 						$scope.filters_loading = false;
 				});
 				break;
-			// load_calendar call receives a JSON object representing a fiscal calendar for which each month begins and ends
-			// by an integer number of weeks (Months begin and end between Sundays & Saturdays). Enables a custom date & time
-			// selector interface as an alternative to conventional date <input> elements
-			case 'load_calendar':
-				var obj = {action: action};
-				var retdata = $http({
-					method: 'POST', 
-					url: '/filter_menu_plugin/includes/calendar_map.php', 
-					data: JSON.stringify(obj), 
-					headers: headers
-				}).then(function(response) {
-						console.log({load_calendar_success:response});
-						$scope.months = response['data']['calendar'];
-						$scope.month_list = Object.keys($scope.months).map(function(k){return $scope.months[k].text;});
-						$scope.level = response['data']['level'];
-						for(m in $scope.months)
-						{
-							$scope.months[m]['s'] = $scope.string_to_date($scope.months[m]['s']);
-							$scope.months[m]['e'] = $scope.string_to_date($scope.months[m]['e']);
-							if($scope.level > 1)
-							{
-								for(w in $scope.months[m]['weeks'])
-								{
-									$scope.months[m]['weeks'][w]['s'] = $scope.string_to_date($scope.months[m]['weeks'][w]['s']);
-									$scope.months[m]['weeks'][w]['e'] = $scope.string_to_date($scope.months[m]['weeks'][w]['e']);
-									if($scope.level > 2)
-									{
-										for(d in $scope.months[m]['weeks'][w]['days'])
-										{
-											$scope.months[m]['weeks'][w]['days'][d].date_text = $scope.months[m]['weeks'][w]['days'][d]['s'].substring(5, 10);
-											$scope.months[m]['weeks'][w]['days'][d]['s'] = $scope.string_to_date($scope.months[m]['weeks'][w]['days'][d]['s']);
-											$scope.months[m]['weeks'][w]['days'][d]['e'] = $scope.string_to_date($scope.months[m]['weeks'][w]['days'][d]['e']);
-											if($scope.level > 3)
-											{
-												for(s in $scope.months[m]['weeks'][w]['days'][d]['shifts'])
-												{
-													$scope.months[m]['weeks'][w]['days'][d]['shifts'][s]['s'] = $scope.string_to_date($scope.months[m]['weeks'][w]['days'][d]['shifts'][s]['s']);
-													$scope.months[m]['weeks'][w]['days'][d]['shifts'][s]['e'] = $scope.string_to_date($scope.months[m]['weeks'][w]['days'][d]['shifts'][s]['e']);
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-						$scope.selected_month = response['data']['current_month'];
-				}, function(response) {
-						console.log({load_user_fail:response});
-				});
 				break;
 			// run_report call passes the filter_selections object to another file to retrieve report data, then passes
 			// a data object and options object to the shared factory for use in the data controller. data and options
@@ -469,17 +417,6 @@ function FilterCtl($scope, $http, $uibModal, $interval, $timeout, $compile, shar
 	/*-------------------------------------DEFINE DEFAULT NGMODEL VALUES AND LOAD DATA------------------------------------*/
 	// subset_selectors: Count of the number of dropdown menus to display above <select> elements in the filter menu
 	//
-	// calendar: Object for controlling calendar configuration, including location and selection mode
-	//		top: DOM top position to plase the calendar control when display calendar button is selected
-	//		left: DOM left position to plase the calendar control when display calendar button is selected
-	//		target: List of variable names to allow the calendar interface to access the correct date when indicating
-	//					which dates have already been selected. First value in this array needs to be a variable name
-	//					accessible by the $scope variable, and each successive value needs to be a variable accessible
-	//					by the previous variable. Allows the calendar functions to traverse multi-dimensional objects
-	//		selector: Controls the selection mode when the calendar interface is shown. 
-	//					's' sets it to update the report start date when user selects a date.
-	//					'e' sets it to update the report end date when user selects a date.
-	//
 	// submit_disabled: Controls whether to enable the default "Submit" button for calling run_report query
 	//
 	// highlight_list: List of <select> elements to highlight to indicate invalid selections
@@ -488,8 +425,6 @@ function FilterCtl($scope, $http, $uibModal, $interval, $timeout, $compile, shar
 	//		around ie specific restrictions. detect_ie() is defined in standard_functions.js
 	$scope.subset_selectors = 0;
 	$scope.query('load_filter_options');
-	$scope.query('load_calendar');
-	$scope.calendar = {top: '0px', left: '0px', target:[], selector:'s'};
 	$scope.submit_disabled = false;
 	$scope.highlight_list = {};
 	$scope.ie = detect_ie();
@@ -548,99 +483,6 @@ function FilterCtl($scope, $http, $uibModal, $interval, $timeout, $compile, shar
 			{$scope.filter_selections.flt_report_start = $scope.filter_selections.flt_report_end;} 
 	});
 	
-	// Function for iterating to the previous month in the fiscal calendar interface
-	$scope.prev_month = function() {
-		let idx = $scope.month_list.indexOf($scope.selected_month);
-		if(idx > 0)
-		{
-			$scope.months[$scope.selected_month].display = false;
-			$scope.selected_month = $scope.month_list[idx-1];
-			$scope.months[$scope.selected_month].display = true;
-		}
-	};
-
-	// Function for iterating to the next month in the fiscal calendar interface
-	$scope.next_month = function() {
-		let idx = $scope.month_list.indexOf($scope.selected_month);
-		if(idx < $scope.month_list.length - 1)
-		{
-			$scope.months[$scope.selected_month].display = false;
-			$scope.selected_month = $scope.month_list[idx+1];
-			$scope.months[$scope.selected_month].display = true;
-		}
-	};
-
-	// Event triggered when a date is selected from the fiscal calendar interface. 
-	// Sets flt_report_start or flt_report end depending on the calendar.selector variable
-	$scope.date_select = function(obj){
-		var ie = detect_ie();
-		if($scope.calendar.target.length > 0)
-		{
-			var root = $scope;
-			for(i = 0 ; i < $scope.calendar.target.length; i++)
-			{
-				idx = $scope.calendar.target[i];
-				if(i == $scope.calendar.target.length - 1)
-					{root[idx] = obj[$scope.calendar.selector];}
-				else
-					{root = root[idx];}
-			}
-		}
-		$scope.show_calendar = false;
-	};
-	
-	// Brings up the fiscal calendar interface. Displaying the calendar involves identifying the selected date, showing 
-	// only the DOM elements contained within the corresponding month, and highlighting all dates within the selection
-	// range.
-	$scope.display_calendar = function(event, indices, ref_point)
-	{
-		ref_point = ref_point || 's';
-		$scope.calendar.selector = ref_point == 'e' ? 'e' : 's';
-		$scope.calendar.target = indices;
-		date_val = null;
-		if($scope.calendar.target.length > 0)
-		{
-			var root = $scope;
-			for(i = 0 ; i < $scope.calendar.target.length; i++)
-			{
-				idx = $scope.calendar.target[i];
-				if(i == $scope.calendar.target.length - 1)
-				{
-					date_val = root[idx];
-					for(m in $scope.months)
-					{
-						if($scope.calendar.selector == 's' && date_val >= new Date($scope.months[m]['s']) && date_val < new Date($scope.months[m]['e']) ||
-						   $scope.calendar.selector == 'e' && date_val > new Date($scope.months[m]['s']) && date_val <= new Date($scope.months[m]['e']))
-						{
-							$scope.months[$scope.selected_month].display = false;
-							$scope.selected_month = $scope.months[m]['text'];
-							$scope.months[$scope.selected_month].display = true;
-						}
-					}
-				}
-				else
-					{root = root[idx];}
-			}
-		}
-		$scope.show_calendar = !$scope.show_calendar;
-		if($scope.show_calendar)
-		{
-			$timeout(function(){
-				$scope.calendar.top = '1px';
-				$scope.calendar.left = '1px';
-				var scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
-				var scrollLeft = (window.pageXOffset !== undefined) ? window.pageXOffset : (document.documentElement || document.body.parentNode || document.body).scrollLeft;
-				
-				target = event.currentTarget;
-				ttbc = document.querySelector('#calendar_selector').getBoundingClientRect();
-				tgbc = target.getBoundingClientRect();
-
-				$scope.calendar.top = (tgbc.top + scrollTop - ttbc.height) + "px";
-				$scope.calendar.left = (tgbc.left + tgbc.width + scrollLeft) + "px";
-			}, 0);
-		}
-	}
-	
 	// Controls whether the filter menu submit button is clickable based on filter selections
 	$scope.validate_submit = function()
 	{
@@ -660,17 +502,4 @@ function FilterCtl($scope, $http, $uibModal, $interval, $timeout, $compile, shar
 	}
 	/*--------------------------------------------------------------------------------------------------------------------*/
 };
-/*------------------------------------------------------------------------------------------------------------------------*/
-
-
-/*--------SET ONCLICK EVENTS TO AUTOMATICALLY HIDE FISCAL CALENDAR INTERFACE IF THE INTEFACE ITSELF WAS NOT CLICKED-------*/
-$(document).on('click', function(event){
-	if($(event.target).closest('#calendar_selector, .calendar_button').length === 0)
-	{
-		let scope = angular.element($('#filter_controller')).scope();
-		scope.$apply(function(){
-			scope.show_calendar = false;;
-		})
-	}
-});
 /*------------------------------------------------------------------------------------------------------------------------*/
