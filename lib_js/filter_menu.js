@@ -207,7 +207,11 @@ function FilterCtl($scope, $http, $uibModal, $interval, $timeout, $compile, shar
 	/*------------------------------------SIMPLE INDCATOR TO SHOW USER DATA IS LOADING------------------------------------*/
 	ellipses = $interval(function(){
 		let dt = new Date();
-		$scope.ellipses = '.'.repeat(Math.ceil((dt.getSeconds()*1000+dt.getMilliseconds())/500) % 4);
+		$scope.ellipses = '';
+		for(i = 0; i < Math.ceil((dt.getSeconds()*1000+dt.getMilliseconds())/500) % 4; i++)
+		{
+			$scope.ellipses = $scope.ellipses + '.';
+		}
 	}, 500)
 	/*--------------------------------------------------------------------------------------------------------------------*/
 
@@ -266,7 +270,7 @@ function FilterCtl($scope, $http, $uibModal, $interval, $timeout, $compile, shar
 			//								date and time for the default reporting period.
 			//			flt_report_end: For reports that require an adjustable reporting period, represents the end
 			//								date and time for the default reporting period.
-			//
+			//				NOTE: Reporting period inputs not yet supported in internet explorer.
 			//		debug_mode: Boolean value. When TRUE, displays the filter_options and filter_selections objects
 			//					in the DOM.
 			case 'load_filter_options':

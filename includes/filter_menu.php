@@ -1,6 +1,6 @@
 <!----------------------------------------------------DESCRIPTION---------------------------------------------------------//
-# This plugin defines the DOM elements within the AngularJS filter menu app
-//------------------------------------------------------------------------------------------------------------------------!>
+// This plugin defines the DOM elements within the AngularJS filter menu app
+//------------------------------------------------------------------------------------------------------------------------->
 <div data-ng-app="filter_app">
 	<div id="filter_controller" data-ng-controller="filter_ctl">
 		<!-------------------------------CUSTOM DATE SELECTOR INTERFACE FOR FISCAL CALENDARS------------------------------->

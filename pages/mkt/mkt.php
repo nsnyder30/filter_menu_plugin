@@ -11,12 +11,31 @@ include($_SERVER['DOCUMENT_ROOT'] . '/filter_menu_plugin/includes/page_init.php'
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.css">
-	<!-- <link rel="stylesheet" href="/filter_menu_plugin/lib_css/bootstrap/bootstrap.css?modtime=<?php #echo filemtime($_SERVER['DOCUMENT_ROOT'] . '/filter_menu_plugin/lib_css/bootstrap/bootstrap.css'); ?>"> -->
 	<link rel="stylesheet" href="/filter_menu_plugin/lib_css/standard.css?modtime=<?php echo filemtime($_SERVER['DOCUMENT_ROOT'] . '/filter_menu_plugin/lib_css/standard.css'); ?>">
 </head>
 <body>
 <?php 
 	include($_SERVER['DOCUMENT_ROOT'] . '/filter_menu_plugin/includes/header.php'); 
+	
+	ob_start() ?>
+		<table>
+			<tr>
+				<td class="text-right text-nowrap font-weight-bold">Start Year:</td>
+				<td class="text-left"><input type="number" data-ng-model="filter_selections.byear_min" min="{{filter_options.byear_min}}" max="{{filter_options.byear_max}}"></td>
+				<td class="text-right text-nowrap font-weight-bold">Minimum Income:</td>
+				<td class="text-left"><input type="number" data-ng-model="filter_selections.income_min" min="0" max="100000" step="1000"></td>
+			</tr>
+			<tr>
+				<td class="text-right text-nowrap font-weight-bold">End Year:</td>
+				<td class="text-left"><input type="number" data-ng-model="filter_selections.byear_max" min="{{filter_options.byear_min}}" max="{{filter_options.byear_max}}"></td>
+				<td class="text-right text-nowrap font-weight-bold">Maximum Income:</td>
+				<td class="text-left"><input type="number" data-ng-model="filter_selections.income_max" min="0" max="100000" step="1000"></td>
+			</tr>
+		</table>
+	<?php
+	$filter_dom_append = ob_get_clean();
+
+
 	ob_start() ?>
 		<div id="data_controller" class="js-load_wait" data-ng-controller="data_ctl" data-ng-show="mkt_data.options.data_loaded" style="display:none">
 			<table class="table">
@@ -59,7 +78,6 @@ include($_SERVER['DOCUMENT_ROOT'] . '/filter_menu_plugin/includes/page_init.php'
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-messages.min.js"></script>
-	<!-- <script src="/filter_menu_plugin/lib_js/standard_functions.js?modtime=<?php #echo filemtime($_SERVER['DOCUMENT_ROOT'] . '/filter_menu_plugin/lib_js/standard_functions.js'); ?>"></script> -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.6/ui-bootstrap-tpls.min.js"></script>
 	<script src="/filter_menu_plugin/lib_js/filter_menu.js?modtime=<?php echo filemtime($_SERVER['DOCUMENT_ROOT'] . '/filter_menu_plugin/lib_js/filter_menu.js'); ?>" autoload="true"></script>
 	<!--------------------------------------------------------------------------------------------------------------------->
@@ -78,24 +96,20 @@ include($_SERVER['DOCUMENT_ROOT'] . '/filter_menu_plugin/includes/page_init.php'
 		app.controller('data_ctl', dataCtl);
 		dataCtl.$inject = ['$scope', '$http', '$uibModal', '$interval', '$timeout', 'shareFact'];
 		function dataCtl($scope, $http, $uibModal, $interval, $timeout, shareFact){
-console.log(shareFact);			
 			$scope.mkt_data = shareFact;
 			$scope.mkt_data.options.data_loaded = false;
-			init_sort = true;
 			$scope.mkt_sort = {col: 'Year_Birth', Year_Birth:true};
 			var mkt_data = [];
 
 			$scope.mkt_data.data_timeout = function()
 			{
-				if(init_sort)
-				{
-					//$scope.toggle_group_sort('mkt_sort','Year_Birth');
-					//init_sort = false;
-				}
 				$scope.mkt_data.options.data_loaded = true;
-				console.log('data timeout triggered');
-				console.log($scope.mkt_data);
+				$scope.mkt_data.selections.byear_min = Math.min.apply(Math.min, $scope.mkt_data.data.map(function(d){return d.Year_Birth;}));
+				$scope.mkt_data.selections.byear_max = Math.max.apply(Math.max, $scope.mkt_data.data.map(function(d){return d.Year_Birth;}));
+				$scope.mkt_data.selections.income_min = 0;
+				$scope.mkt_data.selections.income_max = 100000;
 			}
+			
 			$scope.number_format = function(v,d){
 				d = d || 0;
 				return v == null ? '' : formatNumber(v, d);
@@ -104,7 +118,6 @@ console.log(shareFact);
 			var timeoutId = 0;
 			/*-----------------------------------SCOPE FUNCTION: DYNAMICALLY PULL DATA------------------------------------*/
 			$scope.query = function(action, params){
-console.log({msg:'scope query called', action:action, params:params});			
 				let headers = {'Content-Type': 'application/x-www-form-urlencoded'};
 				let config = {headers: {'Content-Type' : 'application/x-www-form-urlencoded;charset=utf-8;'}};
 				params = params || {};
@@ -139,6 +152,10 @@ console.log({msg:'scope query called', action:action, params:params});
 					flt_pass = true;
 					flt_pass = flt_pass && $scope.mkt_data.selections.flt_select_lists.marital_status.filter(function(d){return d == 'ALL' || d == row.Marital_Status;}).length > 0;
 					flt_pass = flt_pass && $scope.mkt_data.selections.flt_select_lists.education.filter(function(d){return d == 'ALL' || d == row.Education;}).length > 0;
+					flt_pass = flt_pass && $scope.mkt_data.selections.byear_min <= row.Year_Birth;
+					flt_pass = flt_pass && $scope.mkt_data.selections.byear_max >= row.Year_Birth;
+					flt_pass = flt_pass && $scope.mkt_data.selections.income_min <= row.Income;
+					flt_pass = flt_pass && $scope.mkt_data.selections.income_max >= row.Income;
 					return flt_pass
 				};
 			};

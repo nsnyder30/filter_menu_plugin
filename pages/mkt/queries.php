@@ -21,21 +21,26 @@ if(isset($_POST['action']))
 			$mkt->execQuery($query);
 			while($mkt->result != FALSE && $data = $mkt->fetchArray())
 			{
+				$data['Income'] = (int)$data['Income'];
 				$marketing_data[] = $data;
 			}
-			
+
 			$marital = array_unique(array_column($marketing_data, 'Marital_Status'));
 			$education = array_unique(array_column($marketing_data, 'Education'));
 			list($inc_min, $inc_max) = array(min(array_column($marketing_data, 'Income')), max(array_column($marketing_data, 'Income')));
 			list($date_min, $date_max) = array(min(array_column($marketing_data, 'Dt_Customer')), max(array_column($marketing_data, 'Dt_Customer')));
 			list($kh_min, $kh_max) = array(min(array_column($marketing_data, 'Kidhome')), max(array_column($marketing_data, 'Kidhome')));
 			list($th_min, $th_max) = array(min(array_column($marketing_data, 'Teenhome')), max(array_column($marketing_data, 'Teenhome')));
-			list($byear_min, $byear_min) = array(min(array_column($marketing_data, 'Year_Birth')), max(array_column($marketing_data, 'Year_Birth')));
+			list($byear_min, $byear_max) = array(min(array_column($marketing_data, 'Year_Birth')), max(array_column($marketing_data, 'Year_Birth')));
 			
 			asort($marital);
 			asort($education);
 			$results['filter_options']['flt_select_lists']['marital_status']['vals'] = array_values($marital);
 			$results['filter_options']['flt_select_lists']['education']['vals'] = array_values($education);
+			$results['filter_options']['byear_min'] = $byear_min;
+			$results['filter_options']['byear_max'] = $byear_max;
+			$results['filter_options']['income_min'] = $inc_min;
+			$results['filter_options']['income_max'] = $inc_max;
 			$results['filter_options']['title'] = "Marketing Data Filters";
 			break;
 // Define READ operations
@@ -45,6 +50,7 @@ if(isset($_POST['action']))
 			$mkt->execQuery($query);
 			while($mkt->result != FALSE && $data = $mkt->fetchArray())
 			{
+				$data['Income'] = (int)$data['Income'];
 				$results['query_data'][] = $data;
 			}
 			break;
