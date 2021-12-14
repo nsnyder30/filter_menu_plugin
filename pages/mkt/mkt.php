@@ -15,9 +15,8 @@ include($_SERVER['DOCUMENT_ROOT'] . '/filter_menu_plugin/includes/page_init.php'
 	<link rel="stylesheet" href="/filter_menu_plugin/lib_css/standard.css?modtime=<?php echo filemtime($_SERVER['DOCUMENT_ROOT'] . '/filter_menu_plugin/lib_css/standard.css'); ?>">
 </head>
 <body>
-<?php include($_SERVER['DOCUMENT_ROOT'] . '/filter_menu_plugin/includes/header.php'); ?>
-	<div data-ng-app="filter_app" data-ng-controller="filter_ctl">
-	<?php 
+<?php 
+	include($_SERVER['DOCUMENT_ROOT'] . '/filter_menu_plugin/includes/header.php'); 
 	ob_start() ?>
 		<div id="data_controller" class="js-load_wait" data-ng-controller="data_ctl" data-ng-show="mkt_data.options.data_loaded" style="display:none">
 			<table class="table">
