@@ -53,11 +53,11 @@
 				<table class="mt-2 align-top" style="display:inline-block" data-ng-if="filter_options.show_fiscal_reporting_period">
 					<tr>
 						<td class="text-right font-weight-bold">Report Start:</td>
-						<td class="text-right bg-white border border-dark calendar_button a-clickable" data-ng-click="display_calendar($event, ['filter_selections','flt_report_start'], 's')">&nbsp;{{filter_selections.flt_report_start_string}}&nbsp;<img src="/marketing/images/calendar.png" class="ml-1 mr-1 mb-1" width="16" height="16"></td>
+						<td class="text-right bg-white border border-dark calendar_button a-clickable" data-ng-click="display_calendar($event, ['filter_selections','flt_report_start'], 's')">&nbsp;{{filter_selections.flt_report_start_string}}&nbsp;<img src="/filter_menu_plugin/images/calendar.png" class="ml-1 mr-1 mb-1" width="16" height="16"></td>
 					</tr>
 					<tr>
 						<td class="text-right font-weight-bold">Report End:</td>
-						<td class="text-right bg-white border border-dark calendar_button a-clickable" data-ng-click="display_calendar($event, ['filter_selections','flt_report_end'], 'e')">&nbsp;{{filter_selections.flt_report_end_string}}&nbsp;<img src="/marketing/images/calendar.png" class="ml-1 mr-1 mb-1" width="16" height="16" ></td>
+						<td class="text-right bg-white border border-dark calendar_button a-clickable" data-ng-click="display_calendar($event, ['filter_selections','flt_report_end'], 'e')">&nbsp;{{filter_selections.flt_report_end_string}}&nbsp;<img src="/filter_menu_plugin/images/calendar.png" class="ml-1 mr-1 mb-1" width="16" height="16" ></td>
 					</tr>
 				</table>
 				<!--------------------------------------------------------------------------------------------------------->

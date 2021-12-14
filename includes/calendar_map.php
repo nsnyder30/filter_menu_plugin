@@ -1,5 +1,5 @@
 <?php 
-if(!class_exists('dataSourceODBC')){include($_SERVER['DOCUMENT_ROOT'] . '/marketing/includes/page_init.php'); }
+if(!class_exists('dataSourceODBC')){include($_SERVER['DOCUMENT_ROOT'] . '/filter_menu_plugin/includes/page_init.php'); }
 $_POST = !isset($_POST['action']) ? json_decode(file_get_contents('php://input'), true) : $_POST;
 $results = array('input' => $_POST);
 

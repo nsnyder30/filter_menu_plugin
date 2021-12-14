@@ -3,7 +3,7 @@
 	Created by Neil Snyder 
 	File Function: Sample application of AngularJS filter menu plugin
 */
-include($_SERVER['DOCUMENT_ROOT'] . '/marketing/includes/page_init.php');
+include($_SERVER['DOCUMENT_ROOT'] . '/filter_menu_plugin/includes/page_init.php');
 ?>
 <html>
 <head>
@@ -11,11 +11,11 @@ include($_SERVER['DOCUMENT_ROOT'] . '/marketing/includes/page_init.php');
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.css">
-	<!-- <link rel="stylesheet" href="/marketing/lib_css/bootstrap/bootstrap.css?modtime=<?php #echo filemtime($_SERVER['DOCUMENT_ROOT'] . '/marketing/lib_css/bootstrap/bootstrap.css'); ?>"> -->
-	<link rel="stylesheet" href="/marketing/lib_css/standard.css?modtime=<?php echo filemtime($_SERVER['DOCUMENT_ROOT'] . '/marketing/lib_css/standard.css'); ?>">
+	<!-- <link rel="stylesheet" href="/filter_menu_plugin/lib_css/bootstrap/bootstrap.css?modtime=<?php #echo filemtime($_SERVER['DOCUMENT_ROOT'] . '/filter_menu_plugin/lib_css/bootstrap/bootstrap.css'); ?>"> -->
+	<link rel="stylesheet" href="/filter_menu_plugin/lib_css/standard.css?modtime=<?php echo filemtime($_SERVER['DOCUMENT_ROOT'] . '/filter_menu_plugin/lib_css/standard.css'); ?>">
 </head>
 <body>
-<?php include($_SERVER['DOCUMENT_ROOT'] . '/marketing/includes/header.php'); ?>
+<?php include($_SERVER['DOCUMENT_ROOT'] . '/filter_menu_plugin/includes/header.php'); ?>
 	<div data-ng-app="filter_app" data-ng-controller="filter_ctl">
 	<?php 
 	ob_start() ?>
@@ -46,11 +46,11 @@ include($_SERVER['DOCUMENT_ROOT'] . '/marketing/includes/page_init.php');
 	<?php 
 	$data_dom_append = ob_get_clean();
 	
-	include($_SERVER['DOCUMENT_ROOT'] . '/marketing/includes/filter_menu.php');
+	include($_SERVER['DOCUMENT_ROOT'] . '/filter_menu_plugin/includes/filter_menu.php');
 	ob_start() ?>
 	<?php 
 	$filter_menu_append = ob_get_clean();
-	include($_SERVER['DOCUMENT_ROOT'] . '/marketing/includes/footer.php'); ?>
+	include($_SERVER['DOCUMENT_ROOT'] . '/filter_menu_plugin/includes/footer.php'); ?>
 	</div>
 
 	<!------------------------------------------------INCLUDE PAGE FOOTER-------------------------------------------------->
@@ -61,9 +61,9 @@ include($_SERVER['DOCUMENT_ROOT'] . '/marketing/includes/page_init.php');
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-messages.min.js"></script>
-	<!-- <script src="/marketing/lib_js/standard_functions.js?modtime=<?php #echo filemtime($_SERVER['DOCUMENT_ROOT'] . '/marketing/lib_js/standard_functions.js'); ?>"></script> -->
+	<!-- <script src="/filter_menu_plugin/lib_js/standard_functions.js?modtime=<?php #echo filemtime($_SERVER['DOCUMENT_ROOT'] . '/filter_menu_plugin/lib_js/standard_functions.js'); ?>"></script> -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.6/ui-bootstrap-tpls.min.js"></script>
-	<script src="/marketing/lib_js/filter_menu.js?modtime=<?php echo filemtime($_SERVER['DOCUMENT_ROOT'] . '/marketing/lib_js/filter_menu.js'); ?>" autoload="true"></script>
+	<script src="/filter_menu_plugin/lib_js/filter_menu.js?modtime=<?php echo filemtime($_SERVER['DOCUMENT_ROOT'] . '/filter_menu_plugin/lib_js/filter_menu.js'); ?>" autoload="true"></script>
 	<!--------------------------------------------------------------------------------------------------------------------->
 
 

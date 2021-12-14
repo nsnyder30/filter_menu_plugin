@@ -10,7 +10,7 @@ $login_fail = '';
 
 
 #-----------------------LOAD PAGE INIT, LOGOUT CHECK, QUERY EXISTING USERS----------------------------------#
-include($_SERVER['DOCUMENT_ROOT'] . '/marketing/includes/page_init.php');
+include($_SERVER['DOCUMENT_ROOT'] . '/filter_menu_plugin/includes/page_init.php');
 if(isset($_GET['logout'])){session_destroy();}
 $ds_mkt = new dataSource('test_db');
 $user_list = array();
@@ -53,7 +53,7 @@ if(isset($_SESSION['marketing_user']) && count($_SESSION['permissions']) > 0)
 	if(isset($_SESSION['url_return']))
 		{header('Location: '.$_SESSION['url_return']);} 
 	else 
-		{header('Location: /marketing/pages/home.php');}		
+		{header('Location: /filter_menu_plugin/pages/home.php');}		
 	exit();	
 }
 #-----------------------------------------------------------------------------------------------------------#
@@ -98,7 +98,7 @@ if(isset($_POST['submitted']))
 	<title>marketing Login</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="/marketing/lib_css/standard.css">
+	<link rel="stylesheet" href="/filter_menu_plugin/lib_css/standard.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	<style>
 		html, body{
@@ -126,7 +126,7 @@ if(isset($_POST['submitted']))
 		<div class="row d-flex align-content-center h-75">
 			<div class="col-sm">
 			</div>
-			<form action="/marketing/utils/login.php" method="POST" class="col-sm-8 c-login border pt-1 pb-4 w-75">
+			<form action="/filter_menu_plugin/utils/login.php" method="POST" class="col-sm-8 c-login border pt-1 pb-4 w-75">
 				<div class="w-100 text-center h2">Login</div>
 				<div class="row">
 					<div class="col-sm-12 p-1 text-center font-weight-bold">
@@ -158,7 +158,7 @@ if(isset($_POST['submitted']))
 				</div>
 				<div class="row">
 					<div class="col-sm-12 p-0 text-center justify-content-center">
-						<a href="/marketing/utils/create_account.php">Create Account</a>
+						<a href="/filter_menu_plugin/utils/create_account.php">Create Account</a>
 					</div>
 				</div>
 			</form>

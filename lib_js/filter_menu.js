@@ -16,13 +16,13 @@
 
 #	- Include filter_menu.js with parameters in your JavaScript includes
 
-		<script src="/marketing/lib_javascript/angular.min.js?modtime=<?php echo filemtime($_SERVER['DOCUMENT_ROOT'] . '/marketing/lib_javascript/angular.min.js'); ?>"></script>
-		<script src="/marketing/lib_javascript/angular-message.min.js?modtime=<?php echo filemtime($_SERVER['DOCUMENT_ROOT'] . '/marketing/lib_javascript/angular-message.min.js'); ?>"></script>
-		<script src="/marketing/lib_javascript/ui-bootstrap-tpls-1.1.0.js?modtime=<?php echo filemtime($_SERVER['DOCUMENT_ROOT'] . '/marketing/lib_javascript/ui-bootstrap-tpls-1.1.0.js'); ?>"></script>
-		<script src="/marketing/lib_javascript/bootstrap/bootstrap.min.js?modtime=<?php echo filemtime($_SERVER['DOCUMENT_ROOT'] . '/marketing/lib_javascript/bootstrap/bootstrap.js'); ?>"></script>
-		<script src="/marketing/lib_javascript/filter_menu.js?modtime=<?php echo filemtime($_SERVER['DOCUMENT_ROOT'] . '/marketing/lib_javascript/filter_menu.js'); ?>" queries="hourly_moves_queries.php"></script>
-		<script src="/marketing/lib_javascript/ajax_popup.js?modtime=<?php echo filemtime($_SERVER['DOCUMENT_ROOT'] . '/marketing/lib_javascript/ajax_popup.js'); ?>"></script>
-		<script src="/marketing/lib_javascript/drag_element.js?modtime=<?php echo filemtime($_SERVER['DOCUMENT_ROOT'] . '/marketing/lib_javascript/drag_element.js'); ?>"></script>
+		<script src="/filter_menu_plugin/lib_javascript/angular.min.js?modtime=<?php echo filemtime($_SERVER['DOCUMENT_ROOT'] . '/filter_menu_plugin/lib_javascript/angular.min.js'); ?>"></script>
+		<script src="/filter_menu_plugin/lib_javascript/angular-message.min.js?modtime=<?php echo filemtime($_SERVER['DOCUMENT_ROOT'] . '/filter_menu_plugin/lib_javascript/angular-message.min.js'); ?>"></script>
+		<script src="/filter_menu_plugin/lib_javascript/ui-bootstrap-tpls-1.1.0.js?modtime=<?php echo filemtime($_SERVER['DOCUMENT_ROOT'] . '/filter_menu_plugin/lib_javascript/ui-bootstrap-tpls-1.1.0.js'); ?>"></script>
+		<script src="/filter_menu_plugin/lib_javascript/bootstrap/bootstrap.min.js?modtime=<?php echo filemtime($_SERVER['DOCUMENT_ROOT'] . '/filter_menu_plugin/lib_javascript/bootstrap/bootstrap.js'); ?>"></script>
+		<script src="/filter_menu_plugin/lib_javascript/filter_menu.js?modtime=<?php echo filemtime($_SERVER['DOCUMENT_ROOT'] . '/filter_menu_plugin/lib_javascript/filter_menu.js'); ?>" queries="hourly_moves_queries.php"></script>
+		<script src="/filter_menu_plugin/lib_javascript/ajax_popup.js?modtime=<?php echo filemtime($_SERVER['DOCUMENT_ROOT'] . '/filter_menu_plugin/lib_javascript/ajax_popup.js'); ?>"></script>
+		<script src="/filter_menu_plugin/lib_javascript/drag_element.js?modtime=<?php echo filemtime($_SERVER['DOCUMENT_ROOT'] . '/filter_menu_plugin/lib_javascript/drag_element.js'); ?>"></script>
 		
 		
 		<script src="/path_to_js/filter_menu.js?modtime=<?php echo filemtime($_SERVER['DOCUMENT_ROOT'] . '/path_to_js/filter_menu.js'); ?>" 	queries="my_queries.php" autoload="true"></script>
@@ -385,7 +385,7 @@ function FilterCtl($scope, $http, $uibModal, $interval, $timeout, $compile, shar
 				var obj = {action: action};
 				var retdata = $http({
 					method: 'POST', 
-					url: '/marketing/includes/calendar_map.php', 
+					url: '/filter_menu_plugin/includes/calendar_map.php', 
 					data: JSON.stringify(obj), 
 					headers: headers
 				}).then(function(response) {

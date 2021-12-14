@@ -10,8 +10,8 @@ $input_clean_regex = '[^A-Za-z0-9\!\@\#\$\%\^\&\*\(\)\-\_]';
 # csv_interface: Conversion from CSV data to 2D associative arrays
 if($_SERVER['REMOTE_ADDR'] == '127.0.0.1')
 	{$GLOBALS['cfg_file'] = "C:/xampp/php/connections.ini";} 
-if(!class_exists('dataSource')){include($_SERVER['DOCUMENT_ROOT'] . '/marketing/includes/datasource.php');}
-if(!class_exists('csv_interface')){include($_SERVER['DOCUMENT_ROOT'] . '/marketing/includes/csv_interface.php');}
+if(!class_exists('dataSource')){include($_SERVER['DOCUMENT_ROOT'] . '/filter_menu_plugin/includes/datasource.php');}
+if(!class_exists('csv_interface')){include($_SERVER['DOCUMENT_ROOT'] . '/filter_menu_plugin/includes/csv_interface.php');}
 #-----------------------------------------------------------------------------------------------------------#
 
 
@@ -23,14 +23,14 @@ $page = current(explode('?', $page));
 if((!isset($_SESSION['marketing_user']) || !isset($_SESSION['permissions']) || count($_SESSION['permissions']) == 0) && $page != 'login.php')
 {
 	$_SESSION['url_return'] = $_SERVER['REQUEST_URI'];
-	header('Location: /marketing/utils/login.php');	
+	header('Location: /filter_menu_plugin/utils/login.php');	
 	exit();
 }
 #-----------------------------------------------------------------------------------------------------------#
 
 
 #------------------------------------------DEFINE GLOBAL CONSTANTS-------------------------------------------#
-$_GLOBALS['csv_path'] = $_SERVER['DOCUMENT_ROOT'] . '/marketing/cache/';
+$_GLOBALS['csv_path'] = $_SERVER['DOCUMENT_ROOT'] . '/filter_menu_plugin/cache/';
 #-----------------------------------------------------------------------------------------------------------#
 
 

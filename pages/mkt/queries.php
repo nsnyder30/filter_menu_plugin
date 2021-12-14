@@ -3,7 +3,7 @@
 	Created by Neil Snyder 
 	File Function: Database interface for contacts front-end UI
 */
-include($_SERVER['DOCUMENT_ROOT'] . '/marketing/includes/page_init.php');
+include($_SERVER['DOCUMENT_ROOT'] . '/filter_menu_plugin/includes/page_init.php');
 
 // Parse input data to $_POST variable
 // Initialize output variable ($results)
