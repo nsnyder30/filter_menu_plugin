@@ -1,10 +1,7 @@
 <nav class="navbar navbar--nopad navbar-expand-sm bg-dark navbar-dark sticky-top">
 	<ul class="navbar-nav">
 		<li class="nav-item">
-			<a class="nav-link text-white js-tabindex" href="/filter_menu_plugin/pages/home.php" tabindex="1">Home</a>
-		</li>
-		<li class="nav-item">
-			<a class="nav-link text-white js-tabindex" href="/filter_menu_plugin/pages/contacts/contacts.php" tabindex="2">Contacts</a>
+			<a class="nav-link text-white js-tabindex" href="/filter_menu_plugin/pages/mkt/mkt.php" tabindex="2">Sample: Customer Profile Data</a>
 		</li>
 	</ul>
 	<ul class="navbar-nav ml-auto">
