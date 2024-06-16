@@ -41,6 +41,7 @@ if(count(array_intersect_key($_POST, array_flip(array('submitted', 'username', '
 	while($ds_mkt->result != FALSE && $data = $ds_mkt->fetchArray())
 	{
 		$_SESSION['marketing_user'] = $user;
+		$data['usr_permissions'] = $data['usr_permissions'] === null ? '' : $data['usr_permissions'];
 		$_SESSION['permissions'] = array_merge($_SESSION['permissions'], explode(',', $data['usr_permissions']));
 	}
 }
